@@ -32,7 +32,6 @@ w
 " | fdisk $DISK
 sleep 10s
 
-echo "Syncing disk..."
 partprobe
 sleep 20s
 
