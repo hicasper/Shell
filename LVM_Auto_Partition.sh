@@ -51,4 +51,8 @@ echo "Resizing volume..."
 resize2fs -p /dev/mapper/$VGNAME-$LVNAME
 sleep 6s
 
+if [ ! -f "/etc/profile.d/hint.sh" ]; then
+  rm -f /etc/profile.d/hint.sh
+fi
+
 echo "Done! Please restart your server."
