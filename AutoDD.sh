@@ -61,9 +61,10 @@ function start() {
   echo "  2) CentOS 6 (tuna mirror)"
   echo "  3) CentOS 6"
   echo "  4) Debian 9"
-  echo "  5) Ubuntu 16.04"
-  echo "  6) Ubuntu 18.04"
-  echo "  7) Custom image"
+  echo "  5) Debian 10"
+  echo "  6) Ubuntu 16.04"
+  echo "  7) Ubuntu 18.04"
+  echo "  8) Custom image"
   echo "  0) Exit"
   echo -ne "\nYour option: "
   read N
@@ -72,9 +73,10 @@ function start() {
     2) bash /tmp/InstallNET.sh -c 6.9 -v 64 -a --mirror 'http://mirrors.tuna.tsinghua.edu.cn/centos-vault' --ip-addr $MAINIP --ip-gate $GATEWAYIP --ip-mask $SUBNET ;;
     3) bash /tmp/InstallNET.sh -c 6.9 -v 64 -a --ip-addr $MAINIP --ip-gate $GATEWAYIP --ip-mask $NETMASK ;;
     4) bash /tmp/InstallNET.sh -d 9 -v 64 -a --ip-addr $MAINIP --ip-gate $GATEWAYIP --ip-mask $NETMASK ;;
-    5) bash /tmp/InstallNET.sh -u 16.04 -v 64 -a --ip-addr $MAINIP --ip-gate $GATEWAYIP --ip-mask $NETMASK ;;
-    6) bash /tmp/InstallNET.sh -u 18.04 -v 64 -a --ip-addr $MAINIP --ip-gate $GATEWAYIP --ip-mask $NETMASK ;;
-    7)
+    5) bash /tmp/InstallNET.sh -d 10 -v 64 -a --ip-addr $MAINIP --ip-gate $GATEWAYIP --ip-mask $NETMASK ;;
+    6) bash /tmp/InstallNET.sh -u 16.04 -v 64 -a --ip-addr $MAINIP --ip-gate $GATEWAYIP --ip-mask $NETMASK ;;
+    7) bash /tmp/InstallNET.sh -u 18.04 -v 64 -a --ip-addr $MAINIP --ip-gate $GATEWAYIP --ip-mask $NETMASK ;;
+    8)
       read -r -p "Custom image URL: " imgURL
       echo -e "\n"
       read -r -p "Are you sure start reinstall? [Y/n]: " input
