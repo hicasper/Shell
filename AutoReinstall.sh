@@ -15,7 +15,7 @@ function CopyRight() {
   echo "#  Author: hiCasper                                    #"
   echo "#  Blog: blog.hicasper.com/post/135.html               #"
   echo "#  Feedback: https://github.com/hiCasper/Shell/issues  #"
-  echo "#  Last Modified: 2020-02-19                           #"
+  echo "#  Last Modified: 2020-04-30                           #"
   echo "#                                                      #"
   echo "#  Supported by MoeClub                                #"
   echo "#                                                      #"
@@ -47,7 +47,7 @@ function ipCheck() {
 
 function GetIp() {
   MAINIP=$(ip route get 1 | awk -F 'src ' '{print $2}' | awk '{print $1}')
-  GATEWAYIP=$(ip route | grep default | awk '{print $3}')
+  GATEWAYIP=$(ip route | grep default | awk '{print $3}; exit')
   SUBNET=$(ip -o -f inet addr show | awk '/scope global/{sub(/[^.]+\//,"0/",$4);print $4}' | head -1 | awk -F '/' '{print $2}')
   value=$(( 0xffffffff ^ ((1 << (32 - $SUBNET)) - 1) ))
   NETMASK="$(( (value >> 24) & 0xff )).$(( (value >> 16) & 0xff )).$(( (value >> 8) & 0xff )).$(( value & 0xff ))"
@@ -133,7 +133,7 @@ function Start() {
   CopyRight
   
   isCN='0'
-  geoip=$(wget --no-check-certificate -qO- https://api.ip.sb/geoip | grep "\"country_code\":\"CN\"")
+  geoip=$(wget --no-check-certificate -qO- https://api.ip.sb/geoip -T 10 | grep "\"country_code\":\"CN\"")
   if [[ "$geoip" != "" ]];then
     isCN='1'
   fi
