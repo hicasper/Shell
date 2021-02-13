@@ -151,20 +151,20 @@ function Start() {
   if [ -f "/tmp/InstallNET.sh" ]; then
     rm -f /tmp/InstallNET.sh
   fi
-  wget --no-check-certificate -qO /tmp/InstallNET.sh 'https://moeclub.org/attachment/LinuxShell/InstallNET.sh' && chmod a+x /tmp/InstallNET.sh
+  wget --no-check-certificate -qO /tmp/InstallNET.sh 'https://cdn.jsdelivr.net/gh/hiCasper/Shell/InstallNET.sh' && chmod a+x /tmp/InstallNET.sh
 
   CMIRROR=''
   CVMIRROR=''
   DMIRROR=''
   UMIRROR=''
   if [[ "$isCN" == '1' ]];then
-    sed -i 's#https://github.com/MoeClub/MoeClub.github.io/raw/master/lib/wget_udeb_amd64.tar.gz#https://api.moetools.net/get/wget_udeb_amd64#' /tmp/InstallNET.sh
     CMIRROR="--mirror http://mirrors.aliyun.com/centos/"
     CVMIRROR="--mirror http://mirrors.tuna.tsinghua.edu.cn/centos-vault/"
     DMIRROR="--mirror http://mirrors.aliyun.com/debian/"
     UMIRROR="--mirror http://mirrors.aliyun.com/ubuntu/"
   fi
 
+  sed -i 's#https://github.com/MoeClub/MoeClub.github.io/raw/master/lib/wget_udeb_amd64.tar.gz#https://cdn.jsdelivr.net/gh/hiCasper/Shell/wget_udeb_amd64.tar.gz#' /tmp/InstallNET.sh
   sed -i 's/$1$4BJZaD0A$y1QykUnJ6mXprENfwpseH0/$1$7R4IuxQb$J8gcq7u9K0fNSsDNFEfr90/' /tmp/InstallNET.sh
   sed -i "/18.04/a\        [[ \"\$isDigital\" == \'20.04\' ]] && DIST=\'focal\'\;" /tmp/InstallNET.sh
   sed -i '/force-efi-extra-removable/d' /tmp/InstallNET.sh
