@@ -122,7 +122,7 @@ function NetMode() {
             exit 1
           }
         ;;
-        *) clear; echo "Canceled by user!"; exit 1;;
+        *) ;;
       esac
     fi
     NETSTR="--ip-addr ${MAINIP} --ip-gate ${GATEWAYIP} --ip-mask ${NETMASK}"
@@ -164,10 +164,7 @@ function Start() {
     UMIRROR="--mirror http://mirrors.aliyun.com/ubuntu/"
   fi
 
-  sed -i 's#https://github.com/MoeClub/MoeClub.github.io/raw/master/lib/wget_udeb_amd64.tar.gz#https://cdn.jsdelivr.net/gh/hiCasper/Shell/wget_udeb_amd64.tar.gz#' /tmp/InstallNET.sh
   sed -i 's/$1$4BJZaD0A$y1QykUnJ6mXprENfwpseH0/$1$7R4IuxQb$J8gcq7u9K0fNSsDNFEfr90/' /tmp/InstallNET.sh
-  sed -i "/18.04/a\        [[ \"\$isDigital\" == \'20.04\' ]] && DIST=\'focal\'\;" /tmp/InstallNET.sh
-  sed -i '/force-efi-extra-removable/d' /tmp/InstallNET.sh
 
   echo -e "\nPlease select an OS:"
   echo "  1) CentOS 7.9 (DD Image)"
@@ -175,10 +172,11 @@ function Start() {
   echo "  3) CentOS 6"
   echo "  4) Debian 9"
   echo "  5) Debian 10"
-  echo "  6) Ubuntu 16.04"
-  echo "  7) Ubuntu 18.04"
-  echo "  8) Ubuntu 20.04"
-  echo "  9) Custom image"
+  echo "  6) Debian 11"
+  echo "  7) Ubuntu 16.04"
+  echo "  8) Ubuntu 18.04"
+  echo "  9) Ubuntu 20.04"
+  echo "  10) Custom image"
   echo "  0) Exit"
   echo -ne "\nYour option: "
   read N
@@ -188,14 +186,15 @@ function Start() {
     3) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -c 6.10 -v 64 -a $NETSTR $CMIRROR ;;
     4) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -d 9 -v 64 -a $NETSTR $DMIRROR ;;
     5) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -d 10 -v 64 -a $NETSTR $DMIRROR ;;
-    6) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -u 16.04 -v 64 -a $NETSTR $UMIRROR ;;
-    7) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -u 18.04 -v 64 -a $NETSTR $UMIRROR ;;
-    8) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; sed -i 's#images/netboot#legacy-images/netboot#' /tmp/InstallNET.sh; bash /tmp/InstallNET.sh -u 20.04 -v 64 -a $NETSTR $UMIRROR ;;
-    9)
+    6) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -d 11 -v 64 -a $NETSTR $DMIRROR ;;
+    7) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -u 16.04 -v 64 -a $NETSTR $UMIRROR ;;
+    8) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -u 18.04 -v 64 -a $NETSTR $UMIRROR ;;
+    9) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -u 20.04 -v 64 -a $NETSTR $UMIRROR ;;
+    10)
       echo -e "\n"
       read -r -p "Custom image URL: " imgURL
       echo -e "\n"
-      read -r -p "Are you sure start reinstall? [Y/n]: " input
+      read -r -p "Are you sure start reinstall? [y/N]: " input
       case $input in
         [yY][eE][sS]|[yY]) bash /tmp/InstallNET.sh $NETSTR -dd $imgURL $DMIRROR ;;
         *) clear; echo "Canceled by user!"; exit 1;;
