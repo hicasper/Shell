@@ -15,7 +15,7 @@ function CopyRight() {
   echo "#  Author: hiCasper                                    #"
   echo "#  Blog: https://blog.hicasper.com/post/135.html       #"
   echo "#  Feedback: https://github.com/hiCasper/Shell/issues  #"
-  echo "#  Last Modified: 2021-01-13                           #"
+  echo "#  Last Modified: 2021-12-15                           #"
   echo "#                                                      #"
   echo "#  Supported by MoeClub                                #"
   echo "#                                                      #"
@@ -129,6 +129,32 @@ function NetMode() {
   fi
 }
 
+function BootConf() {
+  touch /tmp/bootconf.sh
+  echo '#!/bin/sh'>/tmp/bootconf.sh
+
+  read -r -p "Using static ip? [Y/n]: " input
+  case $input in
+    [yY][eE][sS]|[yY]) staticIp='0' ;;
+    *) staticIp='1' ;;
+  esac
+
+  if [ "$isAuto" == '1' ] && [ "$staticIp" == '0' ]; then
+    cat >>/tmp/bootconf.sh <<EOF
+sed -i 's/dhcp/static/' /etc/sysconfig/network-scripts/ifcfg-eth0;
+echo -e "IPADDR=$MAINIP\nNETMASK=$NETMASK\nGATEWAY=$GATEWAYIP\nDNS1=8.8.8.8\nDNS2=8.8.4.4" >> /etc/sysconfig/network-scripts/ifcfg-eth0
+EOF
+  fi
+  cat >>/tmp/bootconf.sh <<EOF
+rm -rf /etc/rc.d/rc.local
+cp -f /etc/rc.d/rc.local.bak /etc/rc.d/rc.local
+#rm -rf /bootconf.sh
+shutdown -r now
+EOF
+  sed -i '/gunzip -dc/a\ sleep 5; sync; sleep 5; mount -t ext4 \\$(list-devices partition |head -n1) \/mnt; cp -f \/mnt\/etc\/rc.d\/rc.local \/mnt\/etc\/rc.d\/rc.local.bak; chmod +x \/mnt\/etc\/rc.d\/rc.local; cp -f \/bootconf.sh \/mnt\/bootconf.sh; chmod 755 \/mnt\/bootconf.sh; echo \"\/bootconf.sh\" >> \/mnt\/etc\/rc.d\/rc.local; umount \/mnt; sleep 3; \\' /tmp/InstallNET.sh
+  sed -i '/newc/i\cp -f \/tmp\/bootconf.sh \/tmp\/boot\/bootconf.sh'  /tmp/InstallNET.sh
+}
+
 function Start() {
   CopyRight
 
@@ -152,6 +178,7 @@ function Start() {
     rm -f /tmp/InstallNET.sh
   fi
   wget --no-check-certificate -qO /tmp/InstallNET.sh 'https://cdn.jsdelivr.net/gh/hiCasper/Shell@latest/InstallNET.sh' && chmod a+x /tmp/InstallNET.sh
+  #wget --no-check-certificate -qO /tmp/InstallNET.sh 'https://cdn.jsdelivr.net/gh/MoeClub/Note@latest/InstallNET.sh' && chmod a+x /tmp/InstallNET.sh
 
   CMIRROR=''
   CVMIRROR=''
@@ -167,7 +194,7 @@ function Start() {
   sed -i 's/$1$4BJZaD0A$y1QykUnJ6mXprENfwpseH0/$1$7R4IuxQb$J8gcq7u9K0fNSsDNFEfr90/' /tmp/InstallNET.sh
 
   echo -e "\nPlease select an OS:"
-  echo "  1) CentOS 7.9 (DD Image)"
+  echo "  1) CentOS 7.8 (DD Image)"
   echo "  2) CentOS 7.6 (DD Image, ServerSpeeder Avaliable)"
   echo "  3) CentOS 6"
   echo "  4) Debian 9"
@@ -181,8 +208,8 @@ function Start() {
   echo -ne "\nYour option: "
   read N
   case $N in
-    1) echo -e "\nPassword: Pwd@CentOS\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh $NETSTR -dd 'https://api.moetools.net/get/centos-7-image' $DMIRROR ;;
-    2) echo -e "\nPassword: Pwd@CentOS\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh $NETSTR -dd 'https://api.moetools.net/get/centos-76-image' $DMIRROR ;;
+    1) BootConf; echo -e "\nPassword: Pwd@CentOS\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh $NETSTR -dd 'https://api.moetools.net/get/centos-78-image' $DMIRROR ;;
+    2) BootConf; echo -e "\nPassword: Pwd@CentOS\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh $NETSTR -dd 'https://api.moetools.net/get/centos-76-image' $DMIRROR ;;
     3) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -c 6.10 -v 64 -a $NETSTR $CMIRROR ;;
     4) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -d 9 -v 64 -a $NETSTR $DMIRROR ;;
     5) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -d 10 -v 64 -a $NETSTR $DMIRROR ;;
