@@ -133,11 +133,15 @@ function BootConf() {
   touch /tmp/bootconf.sh
   echo '#!/bin/sh'>/tmp/bootconf.sh
 
-  read -r -p "Using static ip? [Y/n]: " input
-  case $input in
-    [yY][eE][sS]|[yY]) staticIp='0' ;;
-    *) staticIp='1' ;;
-  esac
+  staticIp='1'
+  if [ "$isAuto" == '1' ]; then
+    echo -e "\n"
+    read -r -p "Using static ip? [Y/n]: " input
+    case $input in
+      [yY][eE][sS]|[yY]) staticIp='0' ;;
+      *) staticIp='1' ;;
+    esac
+  fi
 
   if [ "$isAuto" == '1' ] && [ "$staticIp" == '0' ]; then
     cat >>/tmp/bootconf.sh <<EOF
@@ -146,12 +150,12 @@ echo -e "IPADDR=$MAINIP\nNETMASK=$NETMASK\nGATEWAY=$GATEWAYIP\nDNS1=8.8.8.8\nDNS
 EOF
   fi
   cat >>/tmp/bootconf.sh <<EOF
-rm -rf /etc/rc.d/rc.local
+rm -f /etc/rc.d/rc.local
 cp -f /etc/rc.d/rc.local.bak /etc/rc.d/rc.local
-#rm -rf /bootconf.sh
+rm -rf /bootconf.sh
 shutdown -r now
 EOF
-  sed -i '/gunzip -dc/a\ sleep 5; sync; sleep 5; mount -t ext4 \\$(list-devices partition |head -n1) \/mnt; cp -f \/mnt\/etc\/rc.d\/rc.local \/mnt\/etc\/rc.d\/rc.local.bak; chmod +x \/mnt\/etc\/rc.d\/rc.local; cp -f \/bootconf.sh \/mnt\/bootconf.sh; chmod 755 \/mnt\/bootconf.sh; echo \"\/bootconf.sh\" >> \/mnt\/etc\/rc.d\/rc.local; umount \/mnt; sleep 3; \\' /tmp/InstallNET.sh
+  sed -i '/sbin\/reboot/i\ sync; umount \\$(list-devices partition |head -n1); mount -t ext4 \\$(list-devices partition |head -n1) \/mnt; cp -f \/mnt\/etc\/rc.d\/rc.local \/mnt\/etc\/rc.d\/rc.local.bak; chmod +x \/mnt\/etc\/rc.d\/rc.local; cp -f \/bootconf.sh \/mnt\/bootconf.sh; chmod 755 \/mnt\/bootconf.sh; echo \"\/bootconf.sh\" >> \/mnt\/etc\/rc.d\/rc.local; sync; umount \/mnt; \\' /tmp/InstallNET.sh
   sed -i '/newc/i\cp -f \/tmp\/bootconf.sh \/tmp\/boot\/bootconf.sh'  /tmp/InstallNET.sh
 }
 

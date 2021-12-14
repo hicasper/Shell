@@ -431,7 +431,7 @@ fi
 
 clear && echo -e "\n\033[36m# Install\033[0m\n"
 
-[[ "$ddMode" == '1' ]] && echo -ne "\033[34mAuto Mode\033[0m insatll \033[33mWindows\033[0m\n[\033[33m$DDURL\033[0m]\n"
+[[ "$ddMode" == '1' ]] && echo -ne "\033[34mAuto Mode\033[0m insatll \033[33mcustom image\033[0m\n[\033[33m$DDURL\033[0m]\n"
 
 if [ -z "$interfaceSelect" ]; then
   if [[ "$linux_relese" == 'debian' ]] || [[ "$linux_relese" == 'ubuntu' ]]; then
