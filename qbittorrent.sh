@@ -52,12 +52,12 @@ if [ ! -d "$HOMEDIR/.config/qBittorrent" ]; then
 fi
 
 wget -O /etc/systemd/system/qbittorrent.service $CONFURL/systemd.service
-sed -i "s/RUNUSER/$RUNUSER/" /etc/systemd/system/qbittorrent.service
+sed -i "s/RUNUSER/${RUNUSER}/" /etc/systemd/system/qbittorrent.service
 
 if [ ! -z "$VER" ]; then
   wget -O $HOMEDIR/.config/qBittorrent/qBittorrent.conf $CONFURL/$VER.conf
-  sed -i "s/QBUSER/$QBUSER/" $HOMEDIR/.config/qBittorrent/qBittorrent.conf
-  sed -i "s/WEBPORT/$WEBPORT/" $HOMEDIR/.config/qBittorrent/qBittorrent.conf
+  sed -i "s/QBUSER/${QBUSER}/" $HOMEDIR/.config/qBittorrent/qBittorrent.conf
+  sed -i "s/WEBPORT/${WEBPORT}/" $HOMEDIR/.config/qBittorrent/qBittorrent.conf
 else
   echo -e "[LegalNotice]\nAccepted=true" > $HOMEDIR/.config/qBittorrent/qBittorrent.conf
 fi
