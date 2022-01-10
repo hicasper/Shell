@@ -1,0 +1,15 @@
+[Unit]
+Description=qBittorrent-nox Service
+Wants=network.target
+After=network.target
+
+[Service]
+Type=simple
+User=RUNUSER
+# The -d flag should not be used in this setup
+ExecStart=/usr/local/bin/qbittorrent-nox
+Restart=on-failure
+SyslogIdentifier=qbittorrent-nox
+
+[Install]
+WantedBy=multi-user.target
