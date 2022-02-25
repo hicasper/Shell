@@ -1,7 +1,10 @@
 #!/bin/bash
 
 [[ "$EUID" -ne '0' ]] && echo "Error:This script must be run as root!" && exit 1;
-setenforce 0
+if [[ -f "/usr/bin/yum" && -f "/etc/selinux/config" ]]; then
+    setenforce 0
+    sed -i 's/^SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
+fi
 
 while [ $# -gt 0 ]; do
     case $1 in
@@ -22,7 +25,7 @@ done
 if [ "$UNINST" == '1' ]; then
   if [ -f "/usr/bin/apt-get" ]; then
     apt-get remove docker docker-engine docker.io containerd runc
-  fid
+  fi
   if [ -f "/usr/bin/yum" ]; then
     yum remove docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-selinux docker-engine-selinux docker-engine
   fi
