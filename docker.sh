@@ -33,7 +33,7 @@ if [ "$UNINST" == '1' ]; then
   exit
 fi
 
-COUNTRY=$(curl -s http://ipinfo.io | python -c "import sys,json; print json.load(sys.stdin)['country']")
+COUNTRY=$(curl -fsSL http://ipinfo.io | grep -o '"country": "[^"]*' | grep -o '[^"]*$')
 
 REPO='https://download.docker.com'
 if [ "$COUNTRY" == 'CN' ]; then
