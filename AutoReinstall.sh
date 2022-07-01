@@ -181,7 +181,7 @@ function Start() {
   if [ -f "/tmp/InstallNET.sh" ]; then
     rm -f /tmp/InstallNET.sh
   fi
-  wget --no-check-certificate -qO /tmp/InstallNET.sh 'https://cdn.jsdelivr.net/gh/hiCasper/Shell@latest/InstallNET.sh' && chmod a+x /tmp/InstallNET.sh
+  wget --no-check-certificate -qO /tmp/InstallNET.sh 'https://fastly.jsdelivr.net/gh/hiCasper/Shell@latest/InstallNET.sh' && chmod a+x /tmp/InstallNET.sh
   #wget --no-check-certificate -qO /tmp/InstallNET.sh 'https://cdn.jsdelivr.net/gh/MoeClub/Note@latest/InstallNET.sh' && chmod a+x /tmp/InstallNET.sh
 
   CMIRROR=''
