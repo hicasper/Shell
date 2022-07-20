@@ -15,7 +15,7 @@ function CopyRight() {
   echo "#  Author: hiCasper                                    #"
   echo "#  Blog: https://blog.hicasper.com/post/135.html       #"
   echo "#  Feedback: https://github.com/hiCasper/Shell/issues  #"
-  echo "#  Last Modified: 2021-12-15                           #"
+  echo "#  Last Modified: 2022-07-20                           #"
   echo "#                                                      #"
   echo "#  Supported by MoeClub                                #"
   echo "#                                                      #"
@@ -163,8 +163,8 @@ function Start() {
   CopyRight
 
   isCN='0'
-  geoip=$(wget --no-check-certificate -qO- https://api.ip.sb/geoip -T 10 | grep "\"country_code\":\"CN\"")
-  if [[ "$geoip" != "" ]];then
+  geo=$(curl -fsSL -m 10 http://ipinfo.io/json | grep "\"country\": \"CN\"")
+  if [[ "$geo" != "" ]];then
     isCN='1'
   fi
 
@@ -181,18 +181,18 @@ function Start() {
   if [ -f "/tmp/InstallNET.sh" ]; then
     rm -f /tmp/InstallNET.sh
   fi
-  wget --no-check-certificate -qO /tmp/InstallNET.sh 'https://fastly.jsdelivr.net/gh/hiCasper/Shell@latest/InstallNET.sh' && chmod a+x /tmp/InstallNET.sh
-  #wget --no-check-certificate -qO /tmp/InstallNET.sh 'https://cdn.jsdelivr.net/gh/MoeClub/Note@latest/InstallNET.sh' && chmod a+x /tmp/InstallNET.sh
+  curl -sSL -o /tmp/InstallNET.sh 'https://fastly.jsdelivr.net/gh/hiCasper/Shell@latest/InstallNET.sh' && chmod a+x /tmp/InstallNET.sh
+  #curl -sSL -o /tmp/InstallNET.sh 'https://cdn.jsdelivr.net/gh/MoeClub/Note@latest/InstallNET.sh' && chmod a+x /tmp/InstallNET.sh
 
   CMIRROR=''
   CVMIRROR=''
   DMIRROR=''
   UMIRROR=''
   if [[ "$isCN" == '1' ]];then
-    CMIRROR="--mirror http://mirrors.aliyun.com/centos/"
-    CVMIRROR="--mirror http://mirrors.tuna.tsinghua.edu.cn/centos-vault/"
-    DMIRROR="--mirror http://mirrors.aliyun.com/debian/"
-    UMIRROR="--mirror http://mirrors.aliyun.com/ubuntu/"
+    CMIRROR="--mirror http://mirrors.ustc.edu.cn/centos/"
+    CVMIRROR="--mirror http://mirrors.ustc.edu.cn/centos-vault/"
+    DMIRROR="--mirror http://mirrors.ustc.edu.cn/debian/"
+    UMIRROR="--mirror http://mirrors.ustc.edu.cn/ubuntu/"
   fi
 
   sed -i 's/$1$4BJZaD0A$y1QykUnJ6mXprENfwpseH0/$1$7R4IuxQb$J8gcq7u9K0fNSsDNFEfr90/' /tmp/InstallNET.sh
