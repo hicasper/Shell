@@ -89,7 +89,7 @@ function NetMode() {
   CopyRight
 
   if [ "$isAuto" == '0' ]; then
-    read -r -p "Using DHCP to configure network automatically? [Y/n]:" input
+    read -r -p "Use DHCP to configure network automatically? [Y/n]:" input
     case $input in
       [yY][eE][sS]|[yY]) NETSTR='' ;;
       [nN][oO]|[nN]) isAuto='1' ;;
@@ -136,7 +136,7 @@ function RHELImageBootConf() {
   staticIp='1'
   if [ "$isAuto" == '1' ]; then
     echo -e "\n"
-    read -r -p "Using static ip? [Y/n]: " input
+    read -r -p "Writing static ip to system? [Y/n]: " input
     case $input in
       [yY][eE][sS]|[yY]) staticIp='0' ;;
       *) staticIp='1' ;;
@@ -169,14 +169,14 @@ function Start() {
   fi
 
   if [ "$isAuto" == '0' ]; then
-    echo "Using DHCP mode."
+    echo "Network Type: DHCP"
   else
     echo "IP: $MAINIP"
     echo "Gateway: $GATEWAYIP"
     echo "Netmask: $NETMASK"
   fi
 
-  [[ "$isCN" == '1' ]] && echo "Using domestic mode."
+  [[ "$isCN" == '1' ]] && echo "Location: Domestic"
 
   if [ -f "/tmp/InstallNET.sh" ]; then
     rm -f /tmp/InstallNET.sh
@@ -215,9 +215,9 @@ function Start() {
   echo -ne "\nYour option: "
   read N
   case $N in
-    1) echo -e "\nPassword: Pwd@CentOS\n"; read -s -n1 -p "Press any key to continue..." ; RHELImageBootConf; bash /tmp/InstallNET.sh $NETSTR -dd 'https://api.moetools.net/get/centos-78-image' $DMIRROR ;;
-    2) echo -e "\nPassword: Pwd@CentOS\n"; read -s -n1 -p "Press any key to continue..." ; RHELImageBootConf; bash /tmp/InstallNET.sh $NETSTR -dd 'https://api.moetools.net/get/centos-76-image' $DMIRROR ;;
-    3) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; RHELImageBootConf; bash /tmp/InstallNET.sh $NETSTR -dd 'https://api.moetools.net/get/rocky-8-image' $DMIRROR ;;
+    1) echo -e "\nPassword: Pwd@CentOS\n"; RHELImageBootConf; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh $NETSTR -dd 'https://api.moetools.net/get/centos-78-image' $DMIRROR ;;
+    2) echo -e "\nPassword: Pwd@CentOS\n"; RHELImageBootConf; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh $NETSTR -dd 'https://api.moetools.net/get/centos-76-image' $DMIRROR ;;
+    3) echo -e "\nPassword: Pwd@Linux\n"; RHELImageBootConf; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh $NETSTR -dd 'https://api.moetools.net/get/rocky-8-image' $DMIRROR ;;
     4) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -d 10 -v 64 -a $NETSTR $DMIRROR ;;
     5) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -d 11 -v 64 -a $NETSTR $DMIRROR ;;
     6) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -u 16.04 -v 64 -a $NETSTR $UMIRROR ;;
