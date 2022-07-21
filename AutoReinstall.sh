@@ -200,28 +200,30 @@ function Start() {
   echo -e "\nPlease select an OS:"
   echo "  1) CentOS 7.8 (DD Image)"
   echo "  2) CentOS 7.6 (DD Image, ServerSpeeder Avaliable)"
-  echo "  3) CentOS 6"
-  echo "  4) Debian 9"
-  echo "  5) Debian 10"
-  echo "  6) Debian 11"
-  echo "  7) Ubuntu 16.04"
-  echo "  8) Ubuntu 18.04"
-  echo "  9) Ubuntu 20.04"
-  echo "  10) Custom image"
+  echo -e "  3) Rocky Linux 8.6 (\033[31mExperimental, NOT SUPPORT LSI/BusLogic disk controller\033[0m)"
+  echo "  4) Debian 10"
+  echo "  5) Debian 11"
+  echo "  6) Ubuntu 16.04"
+  echo "  7) Ubuntu 18.04"
+  echo "  8) Ubuntu 20.04"
+  echo "  9) Custom image"
+  echo -e "\033[31m  Deprecated:\033[0m"
+  echo "  10) CentOS 6"
+  echo "  11) Debian 9"
+  echo "  12) Ubuntu 14.04"
   echo "  0) Exit"
   echo -ne "\nYour option: "
   read N
   case $N in
     1) echo -e "\nPassword: Pwd@CentOS\n"; read -s -n1 -p "Press any key to continue..." ; RHELImageBootConf; bash /tmp/InstallNET.sh $NETSTR -dd 'https://api.moetools.net/get/centos-78-image' $DMIRROR ;;
     2) echo -e "\nPassword: Pwd@CentOS\n"; read -s -n1 -p "Press any key to continue..." ; RHELImageBootConf; bash /tmp/InstallNET.sh $NETSTR -dd 'https://api.moetools.net/get/centos-76-image' $DMIRROR ;;
-    3) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -c 6.10 -v 64 -a $NETSTR $CMIRROR ;;
-    4) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -d 9 -v 64 -a $NETSTR $DMIRROR ;;
-    5) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -d 10 -v 64 -a $NETSTR $DMIRROR ;;
-    6) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -d 11 -v 64 -a $NETSTR $DMIRROR ;;
-    7) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -u 16.04 -v 64 -a $NETSTR $UMIRROR ;;
-    8) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -u 18.04 -v 64 -a $NETSTR $UMIRROR ;;
-    9) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -u 20.04 -v 64 -a $NETSTR $UMIRROR ;;
-    10)
+    3) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; RHELImageBootConf; bash /tmp/InstallNET.sh $NETSTR -dd 'https://api.moetools.net/get/rocky-8-image' $DMIRROR ;;
+    4) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -d 10 -v 64 -a $NETSTR $DMIRROR ;;
+    5) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -d 11 -v 64 -a $NETSTR $DMIRROR ;;
+    6) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -u 16.04 -v 64 -a $NETSTR $UMIRROR ;;
+    7) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -u 18.04 -v 64 -a $NETSTR $UMIRROR ;;
+    8) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -u 20.04 -v 64 -a $NETSTR $UMIRROR ;;
+    9)
       echo -e "\n"
       read -r -p "Custom image URL: " imgURL
       echo -e "\n"
@@ -231,6 +233,9 @@ function Start() {
         *) clear; echo "Canceled by user!"; exit 1;;
       esac
       ;;
+    10) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -c 6.10 -v 64 -a $NETSTR $CMIRROR ;;
+    11) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -d 9 -v 64 -a $NETSTR $DMIRROR ;;
+    12) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -u 14.04 -v 64 -a $NETSTR $UMIRROR ;;
     0) exit 0;;
     *) echo "Wrong input!"; exit 1;;
   esac
