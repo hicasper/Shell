@@ -218,11 +218,31 @@ function Start() {
     1) echo -e "\nPassword: Pwd@CentOS\n"; RHELImageBootConf; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh $NETSTR -dd 'https://api.moetools.net/get/centos-78-image' $DMIRROR ;;
     2) echo -e "\nPassword: Pwd@CentOS\n"; RHELImageBootConf; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh $NETSTR -dd 'https://api.moetools.net/get/centos-76-image' $DMIRROR ;;
     3) echo -e "\nPassword: Pwd@Linux\n"; RHELImageBootConf; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh $NETSTR -dd 'https://api.moetools.net/get/rocky-8-image' $DMIRROR ;;
-    4) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -d 10 -v 64 -a $NETSTR $DMIRROR ;;
-    5) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -d 11 -v 64 -a $NETSTR $DMIRROR ;;
-    6) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -u 16.04 -v 64 -a $NETSTR $UMIRROR ;;
-    7) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -u 18.04 -v 64 -a $NETSTR $UMIRROR ;;
-    8) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -u 20.04 -v 64 -a $NETSTR $UMIRROR ;;
+    4)
+        read -r -p "Input root password[Default: Pwd@Linux]: " password
+        echo -e "\nPassword: ${password:-Pwd@Linux}\n"; read -s -n1 -p "Press any key to continue..."
+        bash /tmp/InstallNET.sh -d 10 -v 64 -a $NETSTR $DMIRROR -p ${password:-Pwd@Linux}
+        ;;
+    5)
+        read -r -p "Input root password[Default: Pwd@Linux]: " password
+        echo -e "\nPassword: ${password:-Pwd@Linux}\n"; read -s -n1 -p "Press any key to continue..."
+        bash /tmp/InstallNET.sh -d 11 -v 64 -a $NETSTR $DMIRROR -p ${password:-Pwd@Linux}
+        ;;
+    6)
+        read -r -p "Input root password[Default: Pwd@Linux]: " password
+        echo -e "\nPassword: ${password:-Pwd@Linux}\n"; read -s -n1 -p "Press any key to continue..."
+        bash /tmp/InstallNET.sh -u 16.04 -v 64 -a $NETSTR $UMIRROR -p ${password:-Pwd@Linux}
+        ;;
+    7)
+        read -r -p "Input root password[Default: Pwd@Linux]: " password
+        echo -e "\nPassword: ${password:-Pwd@Linux}\n"; read -s -n1 -p "Press any key to continue..."
+        bash /tmp/InstallNET.sh -u 18.04 -v 64 -a $NETSTR $UMIRROR -p ${password:-Pwd@Linux}
+        ;;
+    8)
+        read -r -p "Input root password[Default: Pwd@Linux]: " password
+        echo -e "\nPassword: ${password:-Pwd@Linux}\n"; read -s -n1 -p "Press any key to continue..."
+        bash /tmp/InstallNET.sh -u 20.04 -v 64 -a $NETSTR $UMIRROR -p ${password:-Pwd@Linux}
+        ;;
     9)
       echo -e "\n"
       read -r -p "Custom image URL: " imgURL
@@ -233,9 +253,21 @@ function Start() {
         *) clear; echo "Canceled by user!"; exit 1;;
       esac
       ;;
-    10) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -c 6.10 -v 64 -a $NETSTR $CMIRROR ;;
-    11) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -d 9 -v 64 -a $NETSTR $DMIRROR ;;
-    12) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -u 14.04 -v 64 -a $NETSTR $UMIRROR ;;
+    10)
+        read -r -p "Input root password[Default: Pwd@Linux]: " password
+        echo -e "\nPassword: ${password:-Pwd@Linux}\n"; read -s -n1 -p "Press any key to continue..."
+        bash /tmp/InstallNET.sh -c 6.10 -v 64 -a $NETSTR $UMIRROR -p ${password:-Pwd@Linux}
+        ;;
+    11)
+        read -r -p "Input root password[Default: Pwd@Linux]: " password
+        echo -e "\nPassword: ${password:-Pwd@Linux}\n"; read -s -n1 -p "Press any key to continue..."
+        bash /tmp/InstallNET.sh -d 9 -v 64 -a $NETSTR $UMIRROR -p ${password:-Pwd@Linux}
+        ;;
+    12)
+        read -r -p "Input root password[Default: Pwd@Linux]: " password
+        echo -e "\nPassword: ${password:-Pwd@Linux}\n"; read -s -n1 -p "Press any key to continue..."
+        bash /tmp/InstallNET.sh -u 14.04 -v 64 -a $NETSTR $UMIRROR -p ${password:-Pwd@Linux}
+        ;;
     0) exit 0;;
     *) echo "Wrong input!"; exit 1;;
   esac
