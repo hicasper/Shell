@@ -6,6 +6,12 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
+if [ -f "/usr/bin/yum" ] && [ -d "/etc/yum.repos.d" ]; then
+    yum install -y wget curl
+elif [ -f "/usr/bin/apt-get" ] && [ -f "/usr/bin/dpkg" ]; then
+    apt-get install -y wget curl	
+fi
+
 function CopyRight() {
   clear
   echo "########################################################"
@@ -15,7 +21,7 @@ function CopyRight() {
   echo "#  Author: hiCasper                                    #"
   echo "#  Blog: https://blog.hicasper.com/post/135.html       #"
   echo "#  Feedback: https://github.com/hiCasper/Shell/issues  #"
-  echo "#  Last Modified: 2022-07-20                           #"
+  echo "#  Last Modified: 2022-08-07                           #"
   echo "#                                                      #"
   echo "#  Supported by MoeClub                                #"
   echo "#                                                      #"
