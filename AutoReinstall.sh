@@ -195,10 +195,10 @@ function Start() {
   DMIRROR=''
   UMIRROR=''
   if [[ "$isCN" == '1' ]];then
-    CMIRROR="--mirror http://mirrors.ustc.edu.cn/centos/"
-    CVMIRROR="--mirror http://mirrors.ustc.edu.cn/centos-vault/"
-    DMIRROR="--mirror http://mirrors.ustc.edu.cn/debian/"
-    UMIRROR="--mirror http://mirrors.ustc.edu.cn/ubuntu/"
+    CMIRROR="--mirror http://mirrors.cloud.tencent.com/centos"
+    CVMIRROR="--mirror http://mirrors.cloud.tencent.com/centos-vault"
+    DMIRROR="--mirror http://mirrors.cloud.tencent.com/debian"
+    UMIRROR="--mirror http://mirrors.cloud.tencent.com/ubuntu"
   fi
 
   sed -i 's/$1$4BJZaD0A$y1QykUnJ6mXprENfwpseH0/$1$7R4IuxQb$J8gcq7u9K0fNSsDNFEfr90/' /tmp/InstallNET.sh
