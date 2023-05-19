@@ -57,7 +57,7 @@ fi
 case "$VER" in
   "1809") RPMS='docker-ce-18.09.9 docker-ce-cli-18.09.9 containerd.io-1.2.13' ;;
   "1903") RPMS='docker-ce-19.03.15 docker-ce-cli-19.03.15 containerd.io-1.3.9' ;;
-  "2010") RPMS='docker-ce-20.10.17 docker-ce-cli-20.10.17 docker-ce-rootless-extras-20.10.17 containerd.io-1.6.8 docker-compose-plugin-2.6.0' ;;
+  "2010") RPMS='docker-ce-20.10.24 docker-ce-cli-20.10.24 docker-ce-rootless-extras-20.10.24 containerd.io-1.6.20 docker-compose-plugin-2.15.1' ;;
   *) RPMS='docker-ce docker-ce-cli containerd.io docker-compose-plugin' ;;
 esac
 
