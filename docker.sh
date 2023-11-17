@@ -72,7 +72,25 @@ if [ -f "/usr/bin/yum" ]; then
 fi
 
 systemctl start docker
-cat > /etc/docker/daemon.json <<EOF
+if [ "$COUNTRY" == 'CN' ]; then
+  cat > /etc/docker/daemon.json <<EOF
+{
+  "live-restore": true,
+  "log-level": "warn",
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "32m",
+    "max-file": "1"
+  },
+  "registry-mirrors": [
+    "https://hub-mirror.c.163.com",
+    "https://dockerproxy.com",
+    "https://mirror.baidubce.com"
+  ]
+}
+EOF
+else
+  cat > /etc/docker/daemon.json <<EOF
 {
   "live-restore": true,
   "log-level": "warn",
@@ -83,6 +101,7 @@ cat > /etc/docker/daemon.json <<EOF
   }
 }
 EOF
+fi
 
 if [[ -f "/usr/bin/yum" && -f "/etc/selinux/config" ]]; then
   sed -i 's/^SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
